@@ -1,10 +1,27 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { navLinks } from "../constants/const";
 
+const MOBILE_MENU_ANIMATION_DURATION = 250;
+
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [menuState, setMenuState] = useState("closed");
+  const animationTimeoutRef = useRef(null);
   const { pathname } = useLocation();
+
+  const clearAnimationTimeout = () => {
+    if (animationTimeoutRef.current) {
+      clearTimeout(animationTimeoutRef.current);
+      animationTimeoutRef.current = null;
+    }
+  };
+
+  useEffect(
+    () => () => {
+      clearAnimationTimeout();
+    },
+    []
+  );
 
   const linkIcons = {
     "/": (
@@ -72,8 +89,40 @@ function Navbar() {
     ),
   };
 
-  const toggleMenu = () => setIsOpen((prev) => !prev);
-  const closeMenu = () => setIsOpen(false);
+  const openMenu = () => {
+    if (menuState === "open" || menuState === "opening") {
+      return;
+    }
+    clearAnimationTimeout();
+    setMenuState("opening");
+    animationTimeoutRef.current = window.setTimeout(() => {
+      setMenuState("open");
+      animationTimeoutRef.current = null;
+    }, MOBILE_MENU_ANIMATION_DURATION);
+  };
+
+  const closeMenu = () => {
+    if (menuState === "closing" || menuState === "closed") {
+      return;
+    }
+    clearAnimationTimeout();
+    setMenuState("closing");
+    animationTimeoutRef.current = window.setTimeout(() => {
+      setMenuState("closed");
+      animationTimeoutRef.current = null;
+    }, MOBILE_MENU_ANIMATION_DURATION);
+  };
+
+  const toggleMenu = () => {
+    if (menuState === "open" || menuState === "opening") {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  };
+
+  const isMenuVisible = menuState !== "closed";
+  const showCloseIcon = isMenuVisible;
   const isActive = (path) => {
     if (path === "/") {
       return pathname === "/";
@@ -144,11 +193,11 @@ function Navbar() {
         </div>
         <button
           type="button"
-          aria-expanded={isOpen}
+          aria-expanded={isMenuVisible}
           onClick={toggleMenu}
           className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white md:hidden"
         >
-          {isOpen ? (
+          {showCloseIcon ? (
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -179,9 +228,17 @@ function Navbar() {
             </svg>
           )}
         </button>
-        {isOpen && (
-          <div className="absolute left-0 right-0 top-[calc(100%+0.75rem)] origin-top animate-mobileMenu md:hidden">
-            <div className="flex flex-col gap-2 rounded-3xl border border-white/10 bg-black p-4 text-sm font-medium text-gray-100 shadow-2xl shadow-black/40 backdrop-blur-2xl">
+        {isMenuVisible && (
+          <div
+            className={`absolute left-0 right-0 top-[calc(100%+0.75rem)] origin-top md:hidden ${
+              menuState === "opening"
+                ? "animate-mobileMenuIn"
+                : menuState === "closing"
+                ? "animate-mobileMenuOut"
+                : ""
+            }`}
+          >
+            <div className="mobile-menu-surface flex flex-col gap-2 rounded-3xl border border-white/10 p-4 text-sm font-medium text-gray-100 shadow-2xl shadow-black/40 backdrop-blur-2xl">
               {navLinks.map((link) => (
                 <Link
                   to={link.path}
