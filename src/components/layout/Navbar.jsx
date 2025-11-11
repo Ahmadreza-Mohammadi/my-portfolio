@@ -1,0 +1,209 @@
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { navLinks } from "../constants/const";
+
+function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  const linkIcons = {
+    "/": (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-5 w-5"
+        aria-hidden="true"
+      >
+        <path d="M3.5 11 12 3l8.5 8" />
+        <path d="M5 11v9.5a.5.5 0 0 0 .5.5H18.5a.5.5 0 0 0 .5-.5V11" />
+        <path d="M10.5 20.5V16h3v4.5" />
+      </svg>
+    ),
+    "/projects": (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-5 w-5"
+        aria-hidden="true"
+      >
+        <rect x="3" y="4" width="5" height="16" rx="1.5" />
+        <rect x="11" y="8" width="10" height="12" rx="1.5" />
+        <path d="M14 12h3" />
+        <path d="M14 15h5" />
+      </svg>
+    ),
+    "/about": (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-5 w-5"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="7" r="3.5" />
+        <path d="M5.5 20a6.5 6.5 0 0 1 13 0" />
+      </svg>
+    ),
+    "/contact": (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-5 w-5"
+        aria-hidden="true"
+      >
+        <rect x="3" y="5" width="18" height="14" rx="2.5" />
+        <path d="m5 7 7 5 7-5" />
+      </svg>
+    ),
+  };
+
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const closeMenu = () => setIsOpen(false);
+  const isActive = (path) => {
+    if (path === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(path);
+  };
+
+  return (
+    <nav className="sticky top-0 z-50 flex justify-center">
+      <div className="relative flex w-full items-center justify-between  bg-white/10 px-6 py-4 text-gray-300 shadow-lg shadow-black/30 backdrop-blur-xl md:px-8">
+        <div className="text-l font-semibold uppercase tracking-[0.2em] text-gray-300">
+          Ahmadreza Mohammadi
+        </div>
+        <div className="hidden gap-6 text-l font-medium tracking-wide md:flex">
+          {navLinks.map((link) => (
+            <Link
+              to={link.path}
+              key={link.name}
+              aria-current={isActive(link.path) ? "page" : undefined}
+              className={`relative flex items-center gap-2 rounded-full px-3 py-1 transition-all duration-300 hover:text-white hover:drop-shadow-lg after:absolute after:left-3 after:-bottom-0.5 after:h-px after:w-0 after:bg-white after:opacity-70 after:transition-all after:duration-300 ${
+                isActive(link.path)
+                  ? "text-white drop-shadow-md bg-white/10 after:w-0"
+                  : "text-gray-300 hover:after:w-[calc(100%-1.5rem)]"
+              }`}
+            >
+              <span className="opacity-70">{linkIcons[link.path] ?? null}</span>
+              {link.name}
+            </Link>
+          ))}
+        </div>
+        <div className="hidden items-center gap-2 md:flex">
+          <a
+            href="https://github.com/Ahmadreza-Mohammadi"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="h-5 w-5"
+              aria-hidden="true"
+            >
+              <path
+                fillRule="evenodd"
+                d="M12 .5C5.649.5.5 5.65.5 12.004c0 5.1 3.292 9.426 7.865 10.956.575.105.786-.25.786-.555 0-.275-.01-1.004-.015-1.97-3.2.696-3.876-1.543-3.876-1.543-.523-1.327-1.278-1.681-1.278-1.681-1.044-.714.08-.7.08-.7 1.154.081 1.762 1.186 1.762 1.186 1.027 1.76 2.694 1.252 3.35.957.105-.744.402-1.252.732-1.541-2.554-.29-5.237-1.277-5.237-5.682 0-1.255.45-2.28 1.186-3.083-.12-.29-.513-1.458.112-3.04 0 0 .966-.31 3.165 1.177a10.95 10.95 0 0 1 2.88-.388c.977.005 1.963.132 2.88.388 2.197-1.487 3.16-1.177 3.16-1.177.627 1.582.234 2.75.115 3.04.738.803 1.185 1.828 1.185 3.083 0 4.419-2.688 5.388-5.254 5.673.414.358.78 1.066.78 2.149 0 1.552-.014 2.805-.014 3.188 0 .309.206.667.793.554C20.213 21.424 23.5 17.1 23.5 12.004 23.5 5.65 18.35.5 12 .5Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/Ahmadreza-Mohammadi"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="h-5 w-5"
+              aria-hidden="true"
+            >
+              <path d="M4.983 3.5C4.983 4.604 4.105 5.5 3 5.5s-1.983-.896-1.983-2C1.017 2.395 1.895 1.5 3 1.5s1.983.895 1.983 2Zm.034 3.5H1V22h4.017V7ZM8.171 7H12.1v2.05h.058c.546-1.034 1.884-2.124 3.876-2.124C21.356 6.926 22 9.669 22 13.266V22h-4.017v-7.574c0-1.808-.031-4.132-2.517-4.132-2.517 0-2.903 1.964-2.903 3.997V22H8.546V7h-.375Z" />
+            </svg>
+          </a>
+        </div>
+        <button
+          type="button"
+          aria-expanded={isOpen}
+          onClick={toggleMenu}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white md:hidden"
+        >
+          {isOpen ? (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-5 w-5"
+              aria-hidden="true"
+            >
+              <path d="M6 6 18 18" />
+              <path d="M18 6 6 18" />
+            </svg>
+          ) : (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-5 w-5"
+              aria-hidden="true"
+            >
+              <path d="M4 7h16" />
+              <path d="M4 12h16" />
+              <path d="M4 17h16" />
+            </svg>
+          )}
+        </button>
+        {isOpen && (
+          <div className="absolute left-0 right-0 top-[calc(100%+0.75rem)] origin-top animate-mobileMenu md:hidden">
+            <div className="flex flex-col gap-2 rounded-3xl border border-white/10 bg-black p-4 text-sm font-medium text-gray-100 shadow-2xl shadow-black/40 backdrop-blur-2xl">
+              {navLinks.map((link) => (
+                <Link
+                  to={link.path}
+                  key={link.name}
+                  onClick={closeMenu}
+                  aria-current={isActive(link.path) ? "page" : undefined}
+                  className={`flex items-center gap-3 rounded-2xl px-3 py-2 transition-all duration-300 hover:bg-white/10 ${
+                    isActive(link.path) ? "bg-white/10 text-white" : ""
+                  }`}
+                >
+                  <span className="opacity-70">
+                    {linkIcons[link.path] ?? null}
+                  </span>
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
+
+export default Navbar;
