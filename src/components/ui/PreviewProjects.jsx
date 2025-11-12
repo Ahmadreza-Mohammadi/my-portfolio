@@ -4,7 +4,7 @@ import { featuredProjects } from "../constants/const";
 function PreviewProjects() {
   return (
     <section className="mt-20 flex flex-col gap-8 ">
-      <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
+      <div className="px-4 lg:px-0 flex flex-col items-center gap-4 md:flex-row md:justify-between">
         <div>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
             Featured Projects
@@ -37,7 +37,7 @@ function PreviewProjects() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 px-4 lg:px-0">
         {featuredProjects.map((project) => (
           <article
             key={project.id}
