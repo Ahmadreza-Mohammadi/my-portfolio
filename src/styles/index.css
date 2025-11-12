@@ -415,3 +415,68 @@ body {
   opacity: 0.35;
   mix-blend-mode: soft-light;
 }
+
+/* Information Section Animations */
+@keyframes wordHighlight {
+  0% {
+    transform: scale(0.92) translateY(8px);
+    opacity: 0.4;
+    filter: blur(3px);
+  }
+  60% {
+    transform: scale(1.2) translateY(-3px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.15) translateY(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes wordGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 25px rgba(245, 194, 199, 0.7),
+      0 0 50px rgba(245, 194, 199, 0.5), 0 0 75px rgba(245, 194, 199, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 35px rgba(245, 194, 199, 0.9),
+      0 0 70px rgba(245, 194, 199, 0.7), 0 0 100px rgba(245, 194, 199, 0.5);
+  }
+}
+
+@keyframes wordPulse {
+  0%,
+  100% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1.3);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.35);
+  }
+}
+
+.word-highlighted {
+  animation: wordHighlight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    wordGlow 4s ease-in-out infinite 0.8s, wordPulse 3s ease-in-out infinite 1s;
+}
+
+.word-past {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.word-future {
+  transition: all 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
