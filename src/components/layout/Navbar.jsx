@@ -132,9 +132,16 @@ function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 flex justify-center">
-      <div className="relative flex w-full items-center justify-between  bg-white/10 px-6 py-4 text-gray-300 shadow-lg shadow-black/30 backdrop-blur-xl md:px-8">
-        <Link to="/about" className="text-lg font-semibold uppercase tracking-[0.2em] text-gray-300">
-          &lt;Ahmadreza Mohammadi /&gt;
+      <div className="relative flex w-full items-center justify-between gap-2 bg-white/10 px-2 py-2 text-gray-300 shadow-lg shadow-black/30 backdrop-blur-xl sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8">
+        <Link
+          to="/about"
+          className="text-[16px] sm:text-sm md:text-lg font-semibold uppercase tracking-tight sm:tracking-[0.2em] text-gray-300 whitespace-nowrap overflow-hidden text-ellipsis shrink min-w-0"
+          style={{ maxWidth: "calc(100% - 3.5rem)" }}
+        >
+          <span className="hidden min-[400px]:inline">
+            &lt;Ahmadreza Mohammadi /&gt;
+          </span>
+          <span className="min-[400px]:hidden">&lt;A.M /&gt;</span>
         </Link>
         <div className="hidden gap-6 text-lg font-medium tracking-wide md:flex">
           {navLinks.map((link) => (
@@ -195,7 +202,15 @@ function Navbar() {
           type="button"
           aria-expanded={isMenuVisible}
           onClick={toggleMenu}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white md:hidden"
+          style={{
+            width: "2.5rem",
+            height: "2.5rem",
+            minWidth: "2.5rem",
+            minHeight: "2.5rem",
+            flexShrink: 0,
+            aspectRatio: "1 / 1",
+          }}
+          className="flex items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white md:hidden"
         >
           {showCloseIcon ? (
             <svg
