@@ -59,7 +59,7 @@ function PreviewProjects() {
       </div>
 
       <div className="w-full overflow-x-hidden">
-        <div className="projects-grid mt-4 grid gap-4 sm:gap-6 lg:gap-6 w-full px-4 sm:px-6 lg:px-0 auto-rows-fr">
+        <div className="projects-grid mt-4 grid gap-4 sm:gap-6 lg:gap-6 w-full px-4 sm:px-6 lg:px-2 auto-rows-fr">
           {featuredProjects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}

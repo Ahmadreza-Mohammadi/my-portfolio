@@ -153,7 +153,7 @@ function Information() {
       }}
     >
       <div
-        className="sticky w-full flex justify-center items-center z-10"
+        className="sticky w-full flex justify-center items-center z-10 mt-120 lg:mt-80 xl:mt-66 2xl:mt-20"
         style={{
           top: "50%",
           transform: "translateY(-50%)",
