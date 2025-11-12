@@ -133,6 +133,52 @@
   animation: mobileMenuExit 0.25s ease-in forwards;
 }
 
+/* Hamburger Menu Icon Animation */
+.hamburger-icon-wrapper {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger-icon-svg,
+.close-icon-svg {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  transform-origin: center;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hamburger icon states */
+.hamburger-icon-svg {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.hamburger-icon-svg.hiding {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.8);
+}
+
+/* Close icon states */
+.close-icon-svg {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.8);
+}
+
+.close-icon-svg.showing {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.close-icon-svg.hiding {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.8);
+}
+
 /* Scroll-based Animation Keyframes */
 @keyframes fadeInUp {
   from {

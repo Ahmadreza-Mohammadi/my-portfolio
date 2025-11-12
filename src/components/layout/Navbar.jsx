@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { navLinks } from "../constants/const";
 
@@ -7,21 +7,75 @@ const MOBILE_MENU_ANIMATION_DURATION = 250;
 function Navbar() {
   const [menuState, setMenuState] = useState("closed");
   const animationTimeoutRef = useRef(null);
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
   const { pathname } = useLocation();
 
-  const clearAnimationTimeout = () => {
+  const clearAnimationTimeout = useCallback(() => {
     if (animationTimeoutRef.current) {
       clearTimeout(animationTimeoutRef.current);
       animationTimeoutRef.current = null;
     }
-  };
+  }, []);
 
   useEffect(
     () => () => {
       clearAnimationTimeout();
     },
-    []
+    [clearAnimationTimeout]
   );
+
+  const openMenu = useCallback(() => {
+    if (menuState === "open" || menuState === "opening") {
+      return;
+    }
+    clearAnimationTimeout();
+    setMenuState("opening");
+    animationTimeoutRef.current = window.setTimeout(() => {
+      setMenuState("open");
+      animationTimeoutRef.current = null;
+    }, MOBILE_MENU_ANIMATION_DURATION);
+  }, [menuState, clearAnimationTimeout]);
+
+  const closeMenu = useCallback(() => {
+    if (menuState === "closing" || menuState === "closed") {
+      return;
+    }
+    clearAnimationTimeout();
+    setMenuState("closing");
+    animationTimeoutRef.current = window.setTimeout(() => {
+      setMenuState("closed");
+      animationTimeoutRef.current = null;
+    }, MOBILE_MENU_ANIMATION_DURATION);
+  }, [menuState, clearAnimationTimeout]);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    // Only add listener when menu is open (not closed or closing)
+    if (menuState === "closed" || menuState === "closing") return;
+
+    const handleClickOutside = (event) => {
+      // Check if click is outside menu and button
+      if (
+        menuRef.current &&
+        buttonRef.current &&
+        !menuRef.current.contains(event.target) &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        closeMenu();
+      }
+    };
+
+    // Add event listener with a small delay to avoid closing immediately when opening
+    const timeoutId = setTimeout(() => {
+      document.addEventListener("click", handleClickOutside);
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [menuState, closeMenu]);
 
   const linkIcons = {
     "/": (
@@ -89,31 +143,11 @@ function Navbar() {
     ),
   };
 
-  const openMenu = () => {
-    if (menuState === "open" || menuState === "opening") {
-      return;
+  const toggleMenu = (event) => {
+    // Prevent event from bubbling to document click handler
+    if (event) {
+      event.stopPropagation();
     }
-    clearAnimationTimeout();
-    setMenuState("opening");
-    animationTimeoutRef.current = window.setTimeout(() => {
-      setMenuState("open");
-      animationTimeoutRef.current = null;
-    }, MOBILE_MENU_ANIMATION_DURATION);
-  };
-
-  const closeMenu = () => {
-    if (menuState === "closing" || menuState === "closed") {
-      return;
-    }
-    clearAnimationTimeout();
-    setMenuState("closing");
-    animationTimeoutRef.current = window.setTimeout(() => {
-      setMenuState("closed");
-      animationTimeoutRef.current = null;
-    }, MOBILE_MENU_ANIMATION_DURATION);
-  };
-
-  const toggleMenu = () => {
     if (menuState === "open" || menuState === "opening") {
       closeMenu();
     } else {
@@ -122,7 +156,6 @@ function Navbar() {
   };
 
   const isMenuVisible = menuState !== "closed";
-  const showCloseIcon = isMenuVisible;
   const isActive = (path) => {
     if (path === "/") {
       return pathname === "/";
@@ -199,6 +232,7 @@ function Navbar() {
           </a>
         </div>
         <button
+          ref={buttonRef}
           type="button"
           aria-expanded={isMenuVisible}
           onClick={toggleMenu}
@@ -210,9 +244,10 @@ function Navbar() {
             flexShrink: 0,
             aspectRatio: "1 / 1",
           }}
-          className="flex items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white md:hidden"
+          className="relative flex items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white md:hidden"
         >
-          {showCloseIcon ? (
+          <div className="hamburger-icon-wrapper">
+            {/* Hamburger Icon */}
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -220,31 +255,36 @@ function Navbar() {
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-5 w-5"
-              aria-hidden="true"
-            >
-              <path d="M6 6 18 18" />
-              <path d="M18 6 6 18" />
-            </svg>
-          ) : (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-5 w-5"
+              className={`hamburger-icon-svg h-5 w-5 ${
+                isMenuVisible ? "hiding" : ""
+              }`}
               aria-hidden="true"
             >
               <path d="M4 7h16" />
               <path d="M4 12h16" />
               <path d="M4 17h16" />
             </svg>
-          )}
+            {/* Close Icon */}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={`close-icon-svg h-5 w-5 ${
+                isMenuVisible ? "showing" : "hiding"
+              }`}
+              aria-hidden="true"
+            >
+              <path d="M6 6 18 18" />
+              <path d="M18 6 6 18" />
+            </svg>
+          </div>
         </button>
         {isMenuVisible && (
           <div
+            ref={menuRef}
             className={`absolute left-0 right-0 top-[calc(100%+0.75rem)] origin-top md:hidden ${
               menuState === "opening"
                 ? "animate-mobileMenuIn"
@@ -258,7 +298,10 @@ function Navbar() {
                 <Link
                   to={link.path}
                   key={link.name}
-                  onClick={closeMenu}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    closeMenu();
+                  }}
                   aria-current={isActive(link.path) ? "page" : undefined}
                   className={`flex items-center gap-3 rounded-2xl px-3 py-2 transition-all duration-300 hover:bg-white/10 ${
                     isActive(link.path) ? "bg-white/10 text-white" : ""
