@@ -1,8 +1,15 @@
 import { showcaseItems } from "../constants/const";
+import ScrollSection from "../common/ScrollSection";
 
 function Cards() {
   return (
-    <section className="mt-16 flex flex-col gap-6 md:-mx-64">
+    <ScrollSection
+      animationType="fade-up"
+      threshold={0.2}
+      rootMargin="0px 0px -150px 0px"
+      className="mt-16 flex flex-col gap-6 md:-mx-64"
+      as="section"
+    >
       <div className="auto-scroll-wrapper">
         <div className="auto-scroll-track">
           {showcaseItems.map((item, index) => (
@@ -25,7 +32,7 @@ function Cards() {
         <span className="auto-scroll-fade left hidden md:block" />
         <span className="auto-scroll-fade right hidden md:block" />
       </div>
-    </section>
+    </ScrollSection>
   );
 }
 

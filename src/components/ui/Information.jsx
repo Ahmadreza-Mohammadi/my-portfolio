@@ -10,10 +10,37 @@ function Information() {
     typeof window !== "undefined" ? window.innerWidth : 1024
   );
   const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const text =
     "With years of experience across various industries, my portfolio speaks to the diversity and versatility of our work";
   const words = text.split(" ");
+
+  // Hook برای نمایش fade-in اولیه
+  useEffect(() => {
+    const sectionElement = sectionRef.current;
+    if (!sectionElement) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -200px 0px",
+      }
+    );
+
+    observer.observe(sectionElement);
+
+    return () => {
+      observer.unobserve(sectionElement);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -116,7 +143,9 @@ function Information() {
   return (
     <div
       ref={sectionRef}
-      className="relative w-full"
+      className={`relative w-full transition-opacity duration-1000 ease-out ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
       style={{
         paddingTop: paddingTop,
         paddingBottom: `${Math.max(0, dynamicPadding)}px`,

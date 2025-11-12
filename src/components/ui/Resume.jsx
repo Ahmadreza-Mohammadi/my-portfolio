@@ -1,37 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
+import ScrollSection from "../common/ScrollSection";
+import { useScrollAnimation } from "../../hooks/useScrollAnimation";
 
 function Resume() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-  const buttonRef = useRef(null);
+  const [textRef, isTextVisible] = useScrollAnimation({
+    threshold: 0.2,
+    rootMargin: "0px 0px -100px 0px",
+    delay: 0,
+  });
 
-  useEffect(() => {
-    const sectionElement = sectionRef.current;
-    if (!sectionElement) return;
+  const [buttonRef, isButtonVisible] = useScrollAnimation({
+    threshold: 0.2,
+    rootMargin: "0px 0px -100px 0px",
+    delay: 200,
+  });
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -100px 0px",
-      }
-    );
-
-    observer.observe(sectionElement);
-
-    return () => {
-      observer.unobserve(sectionElement);
-    };
-  }, []);
+  const buttonElementRef = useRef(null);
 
   const handlePointerMove = (event) => {
-    const button = buttonRef.current;
+    const button = buttonElementRef.current;
     if (!button) return;
     const rect = button.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100;
@@ -41,7 +28,7 @@ function Resume() {
   };
 
   const handlePointerLeave = () => {
-    const button = buttonRef.current;
+    const button = buttonElementRef.current;
     if (!button) return;
     button.style.setProperty("--hover-x", "50%");
     button.style.setProperty("--hover-y", "50%");
@@ -59,11 +46,20 @@ function Resume() {
   };
 
   return (
-    <section ref={sectionRef} className="mt-20 flex flex-col gap-8">
+    <ScrollSection
+      animationType="fade-up"
+      threshold={0.15}
+      rootMargin="0px 0px -150px 0px"
+      className="mt-20 flex flex-col gap-8"
+      as="section"
+    >
       <div className="flex flex-col items-center gap-6 text-center px-4 lg:px-0">
         <div
-          className={`flex flex-col gap-4 max-w-2xl transition-all duration-700 ease-out ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          ref={textRef}
+          className={`glass-text-container flex flex-col gap-4 max-w-2xl transition-all duration-700 ease-out ${
+            isTextVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
           }`}
         >
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
@@ -76,14 +72,15 @@ function Resume() {
         </div>
 
         <div
-          className={`mt-2 transition-all duration-700 ease-out delay-300 ${
-            isVisible
+          ref={buttonRef}
+          className={`mt-2 transition-all duration-700 ease-out ${
+            isButtonVisible
               ? "opacity-100 translate-y-0 scale-100"
               : "opacity-0 translate-y-8 scale-95"
           }`}
         >
           <button
-            ref={buttonRef}
+            ref={buttonElementRef}
             onClick={handleDownload}
             onMouseMove={handlePointerMove}
             onMouseLeave={handlePointerLeave}
@@ -107,7 +104,7 @@ function Resume() {
           </button>
         </div>
       </div>
-    </section>
+    </ScrollSection>
   );
 }
 
