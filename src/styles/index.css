@@ -424,3 +424,37 @@ body {
       inset 0 0 30px rgba(245, 194, 199, 0.2);
   }
 }
+
+/* Projects Grid - Responsive Layout */
+.projects-grid {
+  grid-template-columns: 1fr;
+}
+
+/* Small screens (640px+) */
+@media (min-width: 640px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* Medium to Large screens (768px - 1023px) - با توجه به padding App.jsx (256px) */
+/* در این بازه، از یک ستون استفاده می‌کنیم تا کارت‌ها کمتر از 280px نشوند */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Large screens (1024px+) - بدون padding اضافی در PreviewProjects */
+@media (min-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Extra Large screens (1280px+) */
+@media (min-width: 1280px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -11,7 +11,7 @@ function ProjectCard({ project, index }) {
   return (
     <article
       ref={itemRef}
-      className={`group card-surface rounded-3xl p-6 flex flex-col gap-4 transition-all duration-[350ms] hover:-translate-y-[6px] hover:scale-[1.02] min-w-0 scroll-stagger-item ${
+      className={`group card-surface rounded-3xl p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 transition-all duration-[350ms] hover:-translate-y-[6px] hover:scale-[1.02] w-full min-w-0 sm:min-w-[280px] max-w-full scroll-stagger-item ${
         isItemVisible ? "visible" : ""
       }`}
     >
@@ -121,4 +121,3 @@ function ProjectCard({ project, index }) {
 }
 
 export default ProjectCard;
-
