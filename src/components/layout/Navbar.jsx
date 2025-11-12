@@ -133,10 +133,10 @@ function Navbar() {
   return (
     <nav className="sticky top-0 z-50 flex justify-center">
       <div className="relative flex w-full items-center justify-between  bg-white/10 px-6 py-4 text-gray-300 shadow-lg shadow-black/30 backdrop-blur-xl md:px-8">
-        <div className="text-l font-semibold uppercase tracking-[0.2em] text-gray-300">
-          Ahmadreza Mohammadi
-        </div>
-        <div className="hidden gap-6 text-l font-medium tracking-wide md:flex">
+        <Link to="/about" className="text-lg font-semibold uppercase tracking-[0.2em] text-gray-300">
+          &lt;Ahmadreza Mohammadi /&gt;
+        </Link>
+        <div className="hidden gap-6 text-lg font-medium tracking-wide md:flex">
           {navLinks.map((link) => (
             <Link
               to={link.path}
