@@ -22,7 +22,10 @@ function App() {
       <ParticlesBackground particleCount={100} staticParticleCount={30} />
       <div className="relative z-10">
         <Navbar />
-        <div className="flex flex-col gap-10 px-0 md:px-64 animate-pageFadeIn">
+        <div
+          key={i18n.language}
+          className="flex flex-col gap-10 px-0 md:px-64 language-switch-enter"
+        >
           <Outlet />
         </div>
         <Footer />

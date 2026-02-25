@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
 
 function HeroSection() {
   const { t } = useTranslation();
@@ -47,12 +48,32 @@ function HeroSection() {
       <span className="text-[54px] md:text-[94px] tracking-tight text-center">
         {t("common.name")}
       </span>
-      <div className="flex justify-center items-center">
-        <img
-          className="h-48 md:h-96 rounded-t-full"
+      <motion.div
+        className="hero-avatar flex justify-center items-center"
+        initial={{ opacity: 0, scale: 0.88, y: 24 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 18,
+          mass: 0.8,
+          delay: 0.2,
+        }}
+        whileHover={{
+          scale: 1.03,
+          transition: { duration: 0.3, ease: "easeOut" },
+        }}
+      >
+        <motion.img
+          className="h-48 md:h-96 rounded-t-full object-cover shadow-2xl shadow-black/30 ring-2 ring-white/10"
           src="/public/images/unnamed.jpg"
+          alt={t("common.name")}
+          whileHover={{
+            boxShadow: "0 25px 50px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.2)",
+            transition: { duration: 0.25 },
+          }}
         />
-      </div>
+      </motion.div>
       <p className="text-center text-[20px] md:text-[44px] tracking-tight w-1/2 min-h-16">
         <span>{typedText}</span>
         <span className={`typing-cursor ${isTyping ? "active" : ""}`}>|</span>

@@ -182,12 +182,10 @@ function About() {
         className="glass-text-container p-8 md:p-12 flex flex-col gap-6 items-start"
       >
         <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
-          Let’s build something thoughtful together.
+          {t("about.ctaTitle")}
         </h2>
         <p className="text-base md:text-lg text-gray-300 max-w-2xl leading-relaxed">
-          I collaborate best when strategy, design, and engineering sit at the
-          same table. If you need an engineer who can shape narratives,
-          architect systems, and sweat the final pixel, I am ready to jump in.
+          {t("about.ctaBody")}
         </p>
         <div
           ref={ctaRef}

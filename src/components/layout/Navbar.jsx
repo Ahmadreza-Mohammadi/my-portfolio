@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
 import { navLinks } from "../constants/const";
 
 const MOBILE_MENU_ANIMATION_DURATION = 250;
@@ -45,10 +46,7 @@ function Navbar() {
     }
     clearAnimationTimeout();
     setMenuState("closing");
-    animationTimeoutRef.current = window.setTimeout(() => {
-      setMenuState("closed");
-      animationTimeoutRef.current = null;
-    }, MOBILE_MENU_ANIMATION_DURATION);
+    /* "closed" is set in onAnimationComplete of the mobile menu motion.div */
   }, [menuState, clearAnimationTimeout]);
 
   // Close menu when clicking outside
@@ -166,7 +164,19 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 flex justify-center" dir="ltr">
+    <motion.nav
+      className="sticky top-0 z-50 flex justify-center"
+      dir="ltr"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 200,
+        damping: 24,
+        mass: 0.6,
+        delay: 0.05,
+      }}
+    >
       <div className="relative flex w-full items-center justify-between gap-2 bg-white/10 px-2 py-2 text-gray-300 shadow-lg shadow-black/30 backdrop-blur-xl sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8">
         <Link
           to="/about"
@@ -182,7 +192,7 @@ function Navbar() {
           {navLinks.map((link) => (
             <Link
               to={link.path}
-              key={link.name}
+              key={link.nameKey}
               aria-current={isActive(link.path) ? "page" : undefined}
               className={`relative flex items-center gap-2 rounded-full px-3 py-1 transition-all duration-300 hover:text-white hover:drop-shadow-lg after:absolute after:left-3 after:-bottom-0.5 after:h-px after:w-0 after:bg-white after:opacity-70 after:transition-all after:duration-300 ${
                 isActive(link.path)
@@ -199,7 +209,7 @@ function Navbar() {
           <button
             type="button"
             onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
-            className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90 transition-all duration-300 hover:bg-white/20 hover:text-white"
+            className="cursor-pointer rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90 transition-all duration-300 hover:bg-white/20 hover:text-white"
             aria-label={i18n.language === "fa" ? "Switch to English" : "تبدیل به فارسی"}
           >
             {i18n.language === "fa" ? "EN" : "FA"}
@@ -293,30 +303,63 @@ function Navbar() {
           </div>
         </button>
         {isMenuVisible && (
-          <div
+          <motion.div
             ref={menuRef}
-            className={`absolute left-0 right-0 top-[calc(100%+0.75rem)] origin-top md:hidden ${
-              menuState === "opening"
-                ? "animate-mobileMenuIn"
-                : menuState === "closing"
-                ? "animate-mobileMenuOut"
-                : ""
-            }`}
+            className="absolute left-0 right-0 top-[calc(100%+0.75rem)] origin-top md:hidden"
+            initial={{ opacity: 0, scaleY: 0.92 }}
+            animate={
+              menuState === "closing"
+                ? { opacity: 0, scaleY: 0.92 }
+                : { opacity: 1, scaleY: 1 }
+            }
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
+              mass: 0.6,
+            }}
+            onAnimationComplete={() => {
+              if (menuState === "closing") {
+                setMenuState("closed");
+              }
+            }}
           >
             <div className="mobile-menu-surface flex flex-col gap-2 rounded-3xl border border-white/10 p-4 text-sm font-medium text-gray-100 shadow-2xl shadow-black/40 backdrop-blur-2xl">
-              <div className="flex justify-end pb-2 border-b border-white/10">
+              <div className="flex items-center justify-end gap-2 pb-2 border-b border-white/10">
                 <button
                   type="button"
                   onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
-                  className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90"
+                  className="cursor-pointer rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90"
                 >
                   {i18n.language === "fa" ? "EN" : "FA"}
                 </button>
+                <a
+                  href="https://github.com/Ahmadreza-Mohammadi"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="GitHub"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                    <path fillRule="evenodd" d="M12 .5C5.649.5.5 5.65.5 12.004c0 5.1 3.292 9.426 7.865 10.956.575.105.786-.25.786-.555 0-.275-.01-1.004-.015-1.97-3.2.696-3.876-1.543-3.876-1.543-.523-1.327-1.278-1.681-1.278-1.681-1.044-.714.08-.7.08-.7 1.154.081 1.762 1.186 1.762 1.186 1.027 1.76 2.694 1.252 3.35.957.105-.744.402-1.252.732-1.541-2.554-.29-5.237-1.277-5.237-5.682 0-1.255.45-2.28 1.186-3.083-.12-.29-.513-1.458.112-3.04 0 0 .966-.31 3.165 1.177a10.95 10.95 0 0 1 2.88-.388c.977.005 1.963.132 2.88.388 2.197-1.487 3.16-1.177 3.16-1.177.627 1.582.234 2.75.115 3.04.738.803 1.185 1.828 1.185 3.083 0 4.419-2.688 5.388-5.254 5.673.414.358.78 1.066.78 2.149 0 1.552-.014 2.805-.014 3.188 0 .309.206.667.793.554C20.213 21.424 23.5 17.1 23.5 12.004 23.5 5.65 18.35.5 12 .5Z" clipRule="evenodd" />
+                  </svg>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/Ahmadreza-Mohammadi"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                    <path d="M4.983 3.5C4.983 4.604 4.105 5.5 3 5.5s-1.983-.896-1.983-2C1.017 2.395 1.895 1.5 3 1.5s1.983.895 1.983 2Zm.034 3.5H1V22h4.017V7ZM8.171 7H12.1v2.05h.058c.546-1.034 1.884-2.124 3.876-2.124C21.356 6.926 22 9.669 22 13.266V22h-4.017v-7.574c0-1.808-.031-4.132-2.517-4.132-2.517 0-2.903 1.964-2.903 3.997V22H8.546V7h-.375Z" />
+                  </svg>
+                </a>
               </div>
               {navLinks.map((link) => (
                 <Link
                   to={link.path}
-                  key={link.name}
+                  key={link.nameKey}
                   onClick={(e) => {
                     e.stopPropagation();
                     closeMenu();
@@ -333,10 +376,10 @@ function Navbar() {
                 </Link>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
-    </nav>
+    </motion.nav>
   );
 }
 
