@@ -355,6 +355,22 @@ body {
   z-index: 1;
 }
 
+/* Footer icons and links black in light theme */
+.footer-light svg {
+  color: #0f172a;
+}
+
+.footer-light a[aria-label],
+.footer-light a[href^="mailto"],
+.footer-light a[href^="http"] {
+  color: #0f172a;
+}
+
+.footer-light a:hover svg,
+.footer-light a:hover {
+  color: #020617;
+}
+
 /* Skill bar fill in light theme – blue gradient */
 [data-theme="light"] .skill-bar-fill {
   background: linear-gradient(to right, #93c5fd, #60a5fa, #3b82f6) !important;
