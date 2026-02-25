@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
+import { useTheme } from "../../context/ThemeContext";
 import { navLinks } from "../constants/const";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
   const { t } = useTranslation();
+  const { theme } = useTheme();
 
   const socialLinks = [
     {
@@ -63,33 +65,41 @@ function Footer() {
   return (
     <footer className="mt-10">
       <div
-        className="relative isolate border-t border-white/10 backdrop-blur-[20px]"
-        style={{
-          background:
-            "radial-gradient(120% 120% at 90% 100%, rgba(69, 0, 3, 0.35) 0%, rgba(0, 0, 0, 0) 55%), radial-gradient(120% 130% at -10% 100%, rgba(69, 0, 3, 0.25) 0%, rgba(0, 0, 0, 0.05) 60%), linear-gradient(0deg, rgba(9, 9, 11, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%)",
-          boxShadow:
-            "inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 -20px 45px -20px rgba(37, 7, 10, 0.5)",
-          WebkitBackdropFilter: "blur(20px)",
-        }}
+        className={`footer-inner relative isolate border-t border-white/10 backdrop-blur-[20px] ${theme === "light" ? "footer-light" : ""}`}
+        style={
+          theme === "dark"
+            ? {
+                background:
+                  "radial-gradient(120% 120% at 90% 100%, rgba(69, 0, 3, 0.35) 0%, rgba(0, 0, 0, 0) 55%), radial-gradient(120% 130% at -10% 100%, rgba(69, 0, 3, 0.25) 0%, rgba(0, 0, 0, 0.05) 60%), linear-gradient(0deg, rgba(9, 9, 11, 0.95) 0%, rgba(0, 0, 0, 0.98) 100%)",
+                boxShadow:
+                  "inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 -20px 45px -20px rgba(37, 7, 10, 0.5)",
+                WebkitBackdropFilter: "blur(20px)",
+              }
+            : undefined
+        }
       >
-        {/* Before pseudo-element effect */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-50"
-          style={{
-            background:
-              "linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 30%)",
-            mixBlendMode: "screen",
-          }}
-        />
-        {/* After pseudo-element effect */}
-        <div
-          className="pointer-events-none absolute inset-0 -top-[20%] opacity-30"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 50%)",
-            mixBlendMode: "soft-light",
-          }}
-        />
+        {theme === "dark" && (
+          <>
+            {/* Before pseudo-element effect */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-50"
+              style={{
+                background:
+                  "linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 30%)",
+                mixBlendMode: "screen",
+              }}
+            />
+            {/* After pseudo-element effect */}
+            <div
+              className="pointer-events-none absolute inset-0 -top-[20%] opacity-30"
+              style={{
+                background:
+                  "radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 50%)",
+                mixBlendMode: "soft-light",
+              }}
+            />
+          </>
+        )}
         <div className="relative mx-auto max-w-7xl px-6 py-12 md:px-8 md:py-16">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-12">
             {/* Brand Section */}

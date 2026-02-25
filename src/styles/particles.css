@@ -135,3 +135,21 @@
   position: relative;
   opacity: 0.4;
 }
+
+/* Light theme: blue-tinted particles to match light theme */
+[data-theme="light"] .particle {
+  background: radial-gradient(
+    circle,
+    rgba(96, 165, 250, 0.45) 0%,
+    rgba(59, 130, 246, 0.3) 30%,
+    rgba(147, 197, 253, 0.15) 60%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.3),
+    0 0 16px rgba(96, 165, 250, 0.15);
+}
+
+[data-theme="light"] .particle-static {
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.35),
+    0 0 12px rgba(96, 165, 250, 0.2);
+}

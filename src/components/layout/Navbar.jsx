@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
+import { useTheme } from "../../context/ThemeContext";
 import { navLinks } from "../constants/const";
 
 const MOBILE_MENU_ANIMATION_DURATION = 250;
@@ -13,6 +14,7 @@ function Navbar() {
   const buttonRef = useRef(null);
   const { pathname } = useLocation();
   const { t, i18n } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
 
   const clearAnimationTimeout = useCallback(() => {
     if (animationTimeoutRef.current) {
@@ -164,7 +166,7 @@ function Navbar() {
   };
 
   return (
-    <motion.nav
+    <Motion.nav
       className="sticky top-0 z-50 flex justify-center"
       dir="ltr"
       initial={{ opacity: 0, y: -20 }}
@@ -177,7 +179,7 @@ function Navbar() {
         delay: 0.05,
       }}
     >
-      <div className="relative flex w-full items-center justify-between gap-2 bg-white/10 px-2 py-2 text-gray-300 shadow-lg shadow-black/30 backdrop-blur-xl sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8">
+      <div className="navbar-inner relative flex w-full items-center justify-between gap-2 bg-white/10 px-2 py-2 text-gray-300 shadow-lg shadow-black/30 backdrop-blur-xl sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8">
         <Link
           to="/about"
           className="text-[16px] sm:text-sm md:text-lg font-semibold uppercase tracking-tight sm:tracking-[0.2em] text-gray-300 whitespace-nowrap overflow-hidden text-ellipsis shrink min-w-0"
@@ -206,6 +208,22 @@ function Navbar() {
           ))}
         </div>
         <div className="hidden items-center gap-3 md:flex">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white cursor-pointer"
+            aria-label={theme === "dark" ? "حالت روشن" : "Dark mode"}
+          >
+            {theme === "dark" ? (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
+                <path d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+              </svg>
+            )}
+          </button>
           <button
             type="button"
             onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
@@ -303,7 +321,7 @@ function Navbar() {
           </div>
         </button>
         {isMenuVisible && (
-          <motion.div
+          <Motion.div
             ref={menuRef}
             className="absolute left-0 right-0 top-[calc(100%+0.75rem)] origin-top md:hidden"
             initial={{ opacity: 0, scaleY: 0.92 }}
@@ -326,6 +344,22 @@ function Navbar() {
           >
             <div className="mobile-menu-surface flex flex-col gap-2 rounded-3xl border border-white/10 p-4 text-sm font-medium text-gray-100 shadow-2xl shadow-black/40 backdrop-blur-2xl">
               <div className="flex items-center justify-end gap-2 pb-2 border-b border-white/10">
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition-all duration-300 hover:bg-white/20 hover:text-white cursor-pointer"
+                  aria-label={theme === "dark" ? "حالت روشن" : "Dark mode"}
+                >
+                  {theme === "dark" ? (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
+                      <path d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                    </svg>
+                  )}
+                </button>
                 <button
                   type="button"
                   onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
@@ -376,10 +410,10 @@ function Navbar() {
                 </Link>
               ))}
             </div>
-          </motion.div>
+          </Motion.div>
         )}
       </div>
-    </motion.nav>
+    </Motion.nav>
   );
 }
 

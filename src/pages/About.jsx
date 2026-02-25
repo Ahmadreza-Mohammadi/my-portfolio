@@ -142,7 +142,7 @@ function About() {
                 </div>
                 <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-linear-to-r from-[#f5c2c7] via-[#f08f9b] to-[#96444c]"
+                    className="skill-bar-fill h-full rounded-full bg-linear-to-r from-[#f5c2c7] via-[#f08f9b] to-[#96444c]"
                     style={{ width: `${skill.level}%` }}
                   />
                 </div>

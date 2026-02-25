@@ -116,7 +116,7 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-33.333%);
   }
 }
 
@@ -130,7 +130,7 @@
   display: flex;
   gap: 1.5rem;
   width: max-content;
-  animation: autoScroll 50s linear infinite;
+  animation: autoScroll 60s linear infinite;
 }
 
 .auto-scroll-track:hover {
@@ -154,6 +154,15 @@
 .auto-scroll-fade.right {
   right: 0;
   background: linear-gradient(270deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}
+
+/* Light theme: fade uses background color so no black edges */
+[data-theme="light"] .auto-scroll-fade.left {
+  background: linear-gradient(90deg, #eff6ff 0%, rgba(239, 246, 255, 0) 100%);
+}
+
+[data-theme="light"] .auto-scroll-fade.right {
+  background: linear-gradient(270deg, #eff6ff 0%, rgba(239, 246, 255, 0) 100%);
 }
 
 /* Mobile Menu Animations */
