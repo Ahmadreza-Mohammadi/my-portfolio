@@ -50,26 +50,30 @@ function HeroSection() {
       </span>
       <motion.div
         className="hero-avatar flex justify-center items-center"
-        initial={{ opacity: 0, scale: 0.88, y: 24 }}
+        initial={{ opacity: 0, scale: 0.82, y: 28 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{
           type: "spring",
-          stiffness: 120,
-          damping: 18,
-          mass: 0.8,
-          delay: 0.2,
+          stiffness: 100,
+          damping: 16,
+          mass: 0.9,
+          delay: 0.25,
         }}
         whileHover={{
-          scale: 1.03,
-          transition: { duration: 0.3, ease: "easeOut" },
+          scale: 1.04,
+          transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
         }}
       >
         <motion.img
           className="h-48 md:h-96 rounded-t-full object-cover shadow-2xl shadow-black/30 ring-2 ring-white/10"
           src="/public/images/unnamed.jpg"
           alt={t("common.name")}
+          initial={{ filter: "blur(8px)" }}
+          animate={{ filter: "blur(0px)" }}
+          transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
           whileHover={{
-            boxShadow: "0 25px 50px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.2)",
+            boxShadow:
+              "0 25px 50px -12px rgba(0,0,0,0.45), 0 0 0 2px rgba(255,255,255,0.25)",
             transition: { duration: 0.25 },
           }}
         />

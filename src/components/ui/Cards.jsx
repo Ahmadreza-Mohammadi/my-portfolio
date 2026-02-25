@@ -4,7 +4,8 @@ import ScrollSection from "../common/ScrollSection";
 
 function Cards() {
   const { t } = useTranslation();
-  const skillsLoop = [...skillKeys, ...skillKeys];
+  /* Three copies so scroll loops seamlessly with no empty gap */
+  const skillsLoop = [...skillKeys, ...skillKeys, ...skillKeys];
 
   return (
     <ScrollSection
