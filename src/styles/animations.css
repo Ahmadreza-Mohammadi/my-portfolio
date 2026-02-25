@@ -37,6 +37,38 @@
   animation-delay: 0.55s;
 }
 
+.hero-sequence > *:nth-child(5) {
+  animation-delay: 0.7s;
+}
+
+.hero-sequence > *:nth-child(6) {
+  animation-delay: 0.85s;
+}
+
+.hero-sequence > *:nth-child(7) {
+  animation-delay: 1s;
+}
+
+/* Hero scroll indicator */
+.hero-scroll-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(245, 194, 199, 0.8);
+  animation: heroScrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes heroScrollBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.5;
+  }
+}
+
 /* Typing Cursor Animation */
 @keyframes cursorBlink {
   to {
