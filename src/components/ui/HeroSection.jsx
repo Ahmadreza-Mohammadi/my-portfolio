@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function HeroSection() {
-  const tagline =
-    "Crafting clean, responsive UIs with modern Next js and React js.";
+  const { t } = useTranslation();
+  const tagline = t("hero.tagline");
   const [typedText, setTypedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
   const buttonRef = useRef(null);
@@ -25,6 +26,8 @@ function HeroSection() {
   };
 
   useEffect(() => {
+    setTypedText("");
+    setIsTyping(true);
     let index = 0;
     const interval = setInterval(() => {
       setTypedText(tagline.slice(0, index + 1));
@@ -42,7 +45,7 @@ function HeroSection() {
   return (
     <div className="mt-4 flex flex-col items-center gap-2 hero-sequence">
       <span className="text-[54px] md:text-[94px] tracking-tight text-center">
-        Ahmadreza Mohammadi
+        {t("common.name")}
       </span>
       <div className="flex justify-center items-center">
         <img
@@ -60,7 +63,7 @@ function HeroSection() {
         onMouseMove={handlePointerMove}
         onMouseLeave={handlePointerLeave}
       >
-        Confirm Your Seat
+        {t("hero.ctaConfirm")}
       </button>
     </div>
   );

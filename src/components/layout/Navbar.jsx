@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { navLinks } from "../constants/const";
 
 const MOBILE_MENU_ANIMATION_DURATION = 250;
@@ -10,6 +11,7 @@ function Navbar() {
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const { pathname } = useLocation();
+  const { t, i18n } = useTranslation();
 
   const clearAnimationTimeout = useCallback(() => {
     if (animationTimeoutRef.current) {
@@ -164,7 +166,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 flex justify-center">
+    <nav className="sticky top-0 z-50 flex justify-center" dir="ltr">
       <div className="relative flex w-full items-center justify-between gap-2 bg-white/10 px-2 py-2 text-gray-300 shadow-lg shadow-black/30 backdrop-blur-xl sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8">
         <Link
           to="/about"
@@ -172,9 +174,9 @@ function Navbar() {
           style={{ maxWidth: "calc(100% - 3.5rem)" }}
         >
           <span className="hidden min-[400px]:inline">
-            &lt;Ahmadreza Mohammadi /&gt;
+            {t("nav.brandName")}
           </span>
-          <span className="min-[400px]:hidden">&lt;A.M /&gt;</span>
+          <span className="min-[400px]:hidden">{t("nav.brandShort")}</span>
         </Link>
         <div className="hidden gap-6 text-lg font-medium tracking-wide md:flex">
           {navLinks.map((link) => (
@@ -189,11 +191,19 @@ function Navbar() {
               }`}
             >
               <span className="opacity-70">{linkIcons[link.path] ?? null}</span>
-              {link.name}
+              {t(link.nameKey)}
             </Link>
           ))}
         </div>
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-3 md:flex">
+          <button
+            type="button"
+            onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
+            className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90 transition-all duration-300 hover:bg-white/20 hover:text-white"
+            aria-label={i18n.language === "fa" ? "Switch to English" : "تبدیل به فارسی"}
+          >
+            {i18n.language === "fa" ? "EN" : "FA"}
+          </button>
           <a
             href="https://github.com/Ahmadreza-Mohammadi"
             target="_blank"
@@ -294,6 +304,15 @@ function Navbar() {
             }`}
           >
             <div className="mobile-menu-surface flex flex-col gap-2 rounded-3xl border border-white/10 p-4 text-sm font-medium text-gray-100 shadow-2xl shadow-black/40 backdrop-blur-2xl">
+              <div className="flex justify-end pb-2 border-b border-white/10">
+                <button
+                  type="button"
+                  onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
+                  className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90"
+                >
+                  {i18n.language === "fa" ? "EN" : "FA"}
+                </button>
+              </div>
               {navLinks.map((link) => (
                 <Link
                   to={link.path}
@@ -310,7 +329,7 @@ function Navbar() {
                   <span className="opacity-70">
                     {linkIcons[link.path] ?? null}
                   </span>
-                  {link.name}
+                  {t(link.nameKey)}
                 </Link>
               ))}
             </div>

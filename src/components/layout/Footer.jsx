@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 import { navLinks } from "../constants/const";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useTranslation();
 
   const socialLinks = [
     {
@@ -93,11 +95,10 @@ function Footer() {
             {/* Brand Section */}
             <div className="flex flex-col gap-4">
               <h3 className="text-lg font-semibold uppercase tracking-[0.2em] text-white">
-                Ahmadreza Mohammadi
+                {t("common.name")}
               </h3>
               <p className="text-sm leading-relaxed text-gray-400">
-                Frontend Developer crafting clean, responsive UIs with modern
-                React and Next.js.
+                {t("footer.brandDesc")}
               </p>
               <div className="flex items-center gap-3 pt-2">
                 {socialLinks.map((social) => (
@@ -124,17 +125,17 @@ function Footer() {
             {/* Quick Links */}
             <div className="flex flex-col gap-4">
               <h4 className="text-sm font-semibold uppercase tracking-[0.15em] text-gray-300">
-                Quick Links
+                {t("footer.quickLinks")}
               </h4>
               <nav className="flex flex-col gap-3">
                 {navLinks.map((link) => (
                   <Link
-                    key={link.name}
+                    key={link.nameKey}
                     to={link.path}
                     className="group flex items-center gap-2 text-sm text-gray-400 transition-all duration-300 hover:text-white"
                   >
                     <span className="h-px w-0 bg-white/60 transition-all duration-300 group-hover:w-4" />
-                    {link.name}
+                    {t(link.nameKey)}
                   </Link>
                 ))}
               </nav>
@@ -143,7 +144,7 @@ function Footer() {
             {/* Contact Info */}
             <div className="flex flex-col gap-4">
               <h4 className="text-sm font-semibold uppercase tracking-[0.15em] text-gray-300">
-                Get In Touch
+                {t("footer.getInTouch")}
               </h4>
               <div className="flex flex-col gap-3 text-sm text-gray-400">
                 <a
@@ -188,11 +189,10 @@ function Footer() {
           <div className="mt-12 border-t border-white/10 pt-8">
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
               <p className="text-xs text-gray-500">
-                © {currentYear} Ahmadreza Mohammadi. All rights reserved.
+                {t("footer.rights", { year: currentYear })}
               </p>
               <p className="text-xs text-gray-500">
-                Built with <span className="text-[#f5c2c7]">React</span> &{" "}
-                <span className="text-[#f5c2c7]">Tailwind CSS</span>
+                <Trans i18nKey="footer.builtWith" components={{ 1: <span className="text-[#f5c2c7]" />, 2: <span className="text-[#f5c2c7]" /> }} />
               </p>
             </div>
           </div>

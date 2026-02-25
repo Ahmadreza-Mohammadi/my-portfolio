@@ -1,81 +1,36 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ScrollSection from "../components/common/ScrollSection";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
-const stats = [
-  {
-    label: "Years crafting UI",
-    value: "6+",
-    detail: "Designing production React / Next.js experiences.",
-  },
-  {
-    label: "Products launched",
-    value: "28",
-    detail: "From fintech dashboards to content platforms.",
-  },
-  {
-    label: "Team velocity gain",
-    value: "32%",
-    detail: "Measured uplift after introducing design systems.",
-  },
-  {
-    label: "Coffee saved",
-    value: "∞",
-    detail: "Automations & DX tooling keep the flow uninterrupted.",
-  },
+const statKeys = [
+  { labelKey: "about.stats_years", value: "6+", detailKey: "about.stats_years_detail" },
+  { labelKey: "about.stats_products", value: "28", detailKey: "about.stats_products_detail" },
+  { labelKey: "about.stats_velocity", value: "32%", detailKey: "about.stats_velocity_detail" },
+  { labelKey: "about.stats_coffee", value: "∞", detailKey: "about.stats_coffee_detail" },
 ];
 
-const timeline = [
-  {
-    period: "2024 — Present",
-    role: "Senior Frontend Engineer · PixelNorth Studio",
-    description:
-      "Lead a distributed squad building multi-tenant dashboards. Owning accessibility, performance budgets, and motion guidelines.",
-  },
-  {
-    period: "2021 — 2024",
-    role: "Product Engineer · Layered Labs",
-    description:
-      "Shipped internal tooling and public apps with Next.js, GraphQL, and Framer Motion. Built the shared component library adopted by 5 teams.",
-  },
-  {
-    period: "2019 — 2021",
-    role: "UI Developer · Freelance",
-    description:
-      "Partnered with agencies to translate polished Figma systems into responsive, animated interfaces with TypeScript and Tailwind.",
-  },
+const timelineKeys = [
+  { periodKey: "about.timeline1_period", roleKey: "about.timeline1_role", descKey: "about.timeline1_desc" },
+  { periodKey: "about.timeline2_period", roleKey: "about.timeline2_role", descKey: "about.timeline2_desc" },
+  { periodKey: "about.timeline3_period", roleKey: "about.timeline3_role", descKey: "about.timeline3_desc" },
 ];
 
-const skills = [
-  { name: "React & Next.js", level: 93, note: "Server Components, SSR, RSC" },
-  { name: "TypeScript + Testing", level: 88, note: "Vitest, Playwright" },
-  {
-    name: "Framer Motion & micro-interactions",
-    level: 85,
-    note: "Motion systems",
-  },
-  { name: "Design systems & tooling", level: 90, note: "Storybook, Chromatic" },
+const skillBars = [
+  { nameKey: "about.skill_react", level: 93, noteKey: "about.skill_react_note" },
+  { nameKey: "about.skill_ts", level: 88, noteKey: "about.skill_ts_note" },
+  { nameKey: "about.skill_motion", level: 85, noteKey: "about.skill_motion_note" },
+  { nameKey: "about.skill_ds", level: 90, noteKey: "about.skill_ds_note" },
 ];
 
-const values = [
-  {
-    title: "Interaction-first design",
-    description:
-      "Every layout is choreographed with purposeful motion, subtle depth, and tactile controls that feel responsive to intent.",
-  },
-  {
-    title: "Accessible velocity",
-    description:
-      "Contrast, focus, keyboard flows, and reduced-motion modes are treated as core features, not nice-to-haves.",
-  },
-  {
-    title: "Performance empathy",
-    description:
-      "Budgets, profiling, and bundle visualization are part of the daily workflow to keep experiences fast on any device.",
-  },
+const valueKeys = [
+  { titleKey: "about.value1_title", descKey: "about.value1_desc" },
+  { titleKey: "about.value2_title", descKey: "about.value2_desc" },
+  { titleKey: "about.value3_title", descKey: "about.value3_desc" },
 ];
 
 function About() {
+  const { t } = useTranslation();
   const [ctaRef, isCtaVisible] = useScrollAnimation({
     threshold: 0.2,
     rootMargin: "0px 0px -100px 0px",
@@ -89,42 +44,37 @@ function About() {
         className="glass-text-container p-8 md:p-12 flex flex-col gap-6 hero-sequence"
       >
         <span className="text-xs uppercase tracking-[0.4em] text-[#f5c2c7]">
-          About
+          {t("about.label")}
         </span>
         <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
-          Building expressive, performant interfaces with intent.
+          {t("about.headline")}
         </h1>
         <p className="text-base md:text-lg text-gray-300 leading-relaxed">
-          I partner with teams who care about detail. My craft blends
-          interaction design, modern front-end architecture, and a systems
-          mindset so products scale gracefully as they grow. Whether it is
-          orchestrating a motion language, tuning render pipelines, or leading
-          UI audits, I obsess over the tiny decisions that compound into premium
-          experiences.
+          {t("about.body")}
         </p>
         <div className="grid gap-4 md:grid-cols-3">
           <div className="card-surface rounded-3xl p-5 flex flex-col gap-2">
             <span className="text-sm text-gray-400 uppercase tracking-[0.35em]">
-              Stack
+              {t("about.stack")}
             </span>
             <p className="text-white text-lg font-semibold">
-              React, Next.js, TypeScript, Tailwind, Framer Motion
+              {t("about.stackValue")}
             </p>
           </div>
           <div className="card-surface rounded-3xl p-5 flex flex-col gap-2">
             <span className="text-sm text-gray-400 uppercase tracking-[0.35em]">
-              Focus
+              {t("about.focus")}
             </span>
             <p className="text-white text-lg font-semibold">
-              Design systems, interaction design, DX tooling
+              {t("about.focusValue")}
             </p>
           </div>
           <div className="card-surface rounded-3xl p-5 flex flex-col gap-2">
             <span className="text-sm text-gray-400 uppercase tracking-[0.35em]">
-              Currently
+              {t("about.currently")}
             </span>
             <p className="text-white text-lg font-semibold">
-              Leading UI Platform @ PixelNorth Studio
+              {t("about.currentlyValue")}
             </p>
           </div>
         </div>
@@ -135,19 +85,19 @@ function About() {
         animationType="fade-up"
         className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
       >
-        {stats.map((item) => (
+        {statKeys.map((item) => (
           <article
-            key={item.label}
+            key={item.labelKey}
             className="card-surface rounded-3xl p-6 flex flex-col gap-3"
           >
             <span className="text-sm uppercase tracking-[0.4em] text-gray-400">
-              {item.label}
+              {t(item.labelKey)}
             </span>
             <span className="text-4xl font-semibold text-white">
               {item.value}
             </span>
             <p className="text-sm text-gray-400 leading-relaxed">
-              {item.detail}
+              {t(item.detailKey)}
             </p>
           </article>
         ))}
@@ -160,20 +110,20 @@ function About() {
       >
         <div className="flex flex-col gap-6">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
-            Journey so far
+            {t("about.journey")}
           </h2>
           <div className="flex flex-col gap-5">
-            {timeline.map((item) => (
+            {timelineKeys.map((item) => (
               <div
-                key={item.period}
+                key={item.periodKey}
                 className="card-surface rounded-3xl p-6 flex flex-col gap-2"
               >
                 <span className="text-xs uppercase tracking-[0.4em] text-[#f5c2c7]">
-                  {item.period}
+                  {t(item.periodKey)}
                 </span>
-                <p className="text-lg font-semibold text-white">{item.role}</p>
+                <p className="text-lg font-semibold text-white">{t(item.roleKey)}</p>
                 <p className="text-sm text-gray-400 leading-relaxed">
-                  {item.description}
+                  {t(item.descKey)}
                 </p>
               </div>
             ))}
@@ -181,13 +131,13 @@ function About() {
         </div>
         <div className="flex flex-col gap-6">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
-            Tooling & Specialties
+            {t("about.tooling")}
           </h2>
           <div className="card-surface rounded-3xl p-6 flex flex-col gap-6">
-            {skills.map((skill) => (
-              <div key={skill.name} className="flex flex-col gap-2">
+            {skillBars.map((skill) => (
+              <div key={skill.nameKey} className="flex flex-col gap-2">
                 <div className="flex items-center justify-between text-sm text-gray-300">
-                  <span>{skill.name}</span>
+                  <span>{t(skill.nameKey)}</span>
                   <span>{skill.level}%</span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
@@ -197,7 +147,7 @@ function About() {
                   />
                 </div>
                 <span className="text-xs uppercase tracking-[0.25em] text-gray-500">
-                  {skill.note}
+                  {t(skill.noteKey)}
                 </span>
               </div>
             ))}
@@ -210,17 +160,17 @@ function About() {
         animationType="fade-up"
         className="grid gap-6 md:grid-cols-3"
       >
-        {values.map((item) => (
+        {valueKeys.map((item) => (
           <article
-            key={item.title}
+            key={item.titleKey}
             className="card-surface rounded-3xl p-6 flex flex-col gap-3"
           >
             <span className="text-xs uppercase tracking-[0.35em] text-[#f5c2c7]">
-              Principle
+              {t("about.principle")}
             </span>
-            <h3 className="text-xl font-semibold text-white">{item.title}</h3>
+            <h3 className="text-xl font-semibold text-white">{t(item.titleKey)}</h3>
             <p className="text-sm text-gray-400 leading-relaxed">
-              {item.description}
+              {t(item.descKey)}
             </p>
           </article>
         ))}
@@ -251,7 +201,7 @@ function About() {
             to="/contact"
             className="btn-accent btn-intelligent px-6 py-3 rounded-full uppercase tracking-[0.3em] text-sm font-semibold inline-flex items-center gap-3"
           >
-            Reach out
+            {t("about.reachOut")}
             <svg
               viewBox="0 0 24 24"
               fill="none"

@@ -1,52 +1,27 @@
+import { useTranslation } from "react-i18next";
 import ScrollSection from "../components/common/ScrollSection";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
-const contactChannels = [
-  {
-    title: "Direct email",
-    description: "Share a brief about your team, timeline, and goals.",
-    action: "hello@example.com",
-    href: "mailto:hello@example.com",
-  },
-  {
-    title: "Book a call",
-    description: "30-minute discovery sessions, Mon–Thu.",
-    action: "Schedule via Cal.com",
-    href: "https://cal.com/",
-  },
-  {
-    title: "Collaboration docs",
-    description: "Receive a tailored plan, scope, and pricing sheet.",
-    action: "Request a proposal",
-    href: "mailto:hello@example.com?subject=Project%20Proposal%20Request",
-  },
+const contactChannelKeys = [
+  { titleKey: "contact.directEmail", descKey: "contact.directEmail_desc", actionKey: "contact.directEmail_action", href: "mailto:hello@example.com" },
+  { titleKey: "contact.bookCall", descKey: "contact.bookCall_desc", actionKey: "contact.bookCall_action", href: "https://cal.com/" },
+  { titleKey: "contact.collabDocs", descKey: "contact.collabDocs_desc", actionKey: "contact.collabDocs_action", href: "mailto:hello@example.com?subject=Project%20Proposal%20Request" },
 ];
 
-const officeHours = [
-  { day: "Mon — Thu", time: "10:00 – 18:00 CET" },
-  { day: "Fri", time: "Remote deep work · async only" },
-  { day: "Response time", time: "< 24h on weekdays" },
+const officeHourKeys = [
+  { dayKey: "contact.office_mon", timeKey: "contact.office_mon_time" },
+  { dayKey: "contact.office_fri", timeKey: "contact.office_fri_time" },
+  { dayKey: "contact.office_response", timeKey: "contact.office_response_time" },
 ];
 
-const faqs = [
-  {
-    question: "How do engagements typically start?",
-    answer:
-      "We begin with a discovery call to unpack requirements, constraints, and success metrics. From there, I share a lightweight roadmap plus an initial estimate.",
-  },
-  {
-    question: "Do you work with existing teams?",
-    answer:
-      "Yes. I often plug into design-engineering pods, acting as the front-end lead who shapes the system, reviews PRs, and keeps motion/performance cohesive.",
-  },
-  {
-    question: "What stack do you prefer?",
-    answer:
-      "React, Next.js, TypeScript, Tailwind, and Framer Motion are my defaults, but I adapt to whatever keeps the experience performant and maintainable.",
-  },
+const faqKeys = [
+  { questionKey: "contact.faq1_q", answerKey: "contact.faq1_a" },
+  { questionKey: "contact.faq2_q", answerKey: "contact.faq2_a" },
+  { questionKey: "contact.faq3_q", answerKey: "contact.faq3_a" },
 ];
 
 function Contact() {
+  const { t } = useTranslation();
   const [ctaRef, isCtaVisible] = useScrollAnimation({
     threshold: 0.2,
     rootMargin: "0px 0px -100px 0px",
@@ -64,20 +39,16 @@ function Contact() {
         className="glass-text-container p-8 md:p-12 flex flex-col gap-6 hero-sequence"
       >
         <span className="text-xs uppercase tracking-[0.4em] text-[#f5c2c7]">
-          Contact
+          {t("contact.label")}
         </span>
         <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
-          Let’s plan the next release together.
+          Let’s {t("contact.headline")}
         </h1>
         <p className="text-base md:text-lg text-gray-300 leading-relaxed">
-          I work with founders, product squads, and agencies who value
-          interaction quality and predictable delivery. Tell me what you are
-          shipping next and we will map out a collaboration that fits your
-  cadence.
+          {t("contact.body")}
         </p>
         <p className="text-sm text-gray-400">
-          Prefer async? Email works best—I typically respond within one business
-          day.
+          {t("contact.asyncNote")}
         </p>
       </ScrollSection>
 
@@ -86,16 +57,16 @@ function Contact() {
         animationType="fade-up"
         className="grid gap-6 md:grid-cols-3"
       >
-        {contactChannels.map((channel) => (
+        {contactChannelKeys.map((channel) => (
           <article
-            key={channel.title}
+            key={channel.titleKey}
             className="card-surface rounded-3xl p-6 flex flex-col gap-3"
           >
             <span className="text-xs uppercase tracking-[0.35em] text-[#f5c2c7]">
-              {channel.title}
+              {t(channel.titleKey)}
             </span>
             <p className="text-sm text-gray-400 leading-relaxed">
-              {channel.description}
+              {t(channel.descKey)}
             </p>
             <a
               href={channel.href}
@@ -103,7 +74,7 @@ function Contact() {
               rel="noreferrer"
               className="text-white font-semibold inline-flex items-center gap-2 group"
             >
-              {channel.action}
+              {t(channel.actionKey)}
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -130,71 +101,70 @@ function Contact() {
         <div className="card-surface rounded-3xl p-8 flex flex-col gap-6">
           <div>
             <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
-              Send a note
+              {t("contact.sendNote")}
             </h2>
             <p className="text-sm text-gray-400">
-              Share as much detail as you can—timeline, deliverables, links to
-              files—and I will follow up with next steps.
+              {t("contact.sendNote_desc")}
             </p>
           </div>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="grid gap-4 md:grid-cols-2">
               <label className="flex flex-col gap-2 text-sm text-gray-300">
-                Name
+                {t("contact.formName")}
                 <input
                   type="text"
                   name="name"
                   required
-                  placeholder="Alex Product"
+                  placeholder={t("contact.formPlaceholderName")}
                   className="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-gray-500 focus:border-white/30 focus:outline-none"
                 />
               </label>
               <label className="flex flex-col gap-2 text-sm text-gray-300">
-                Email
+                {t("contact.formEmail")}
                 <input
                   type="email"
                   name="email"
                   required
-                  placeholder="team@studio.com"
+                  placeholder={t("contact.formPlaceholderEmail")}
                   className="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-gray-500 focus:border-white/30 focus:outline-none"
                 />
               </label>
             </div>
             <label className="flex flex-col gap-2 text-sm text-gray-300">
-              Company / Team
+              {t("contact.formCompany")}
               <input
                 type="text"
                 name="company"
-                placeholder="Northwind Product"
+                placeholder={t("contact.formPlaceholderCompany")}
                 className="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-gray-500 focus:border-white/30 focus:outline-none"
               />
             </label>
             <label className="flex flex-col gap-2 text-sm text-gray-300">
-              Project context
+              {t("contact.formProject")}
               <textarea
                 name="project"
                 required
                 rows={4}
-                placeholder="What are you building? What does success look like?"
+                placeholder={t("contact.formPlaceholderProject")}
                 className="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-gray-500 focus:border-white/30 focus:outline-none resize-none"
               />
             </label>
             <div className="grid gap-4 md:grid-cols-2">
               <label className="flex flex-col gap-2 text-sm text-gray-300">
-                Ideal kickoff
+                {t("contact.formKickoff")}
                 <input
                   type="text"
                   name="timeline"
-                  placeholder="e.g. Mid January"
+                  placeholder={t("contact.formPlaceholderKickoff")}
                   className="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-gray-500 focus:border-white/30 focus:outline-none"
                 />
               </label>
               <label className="flex flex-col gap-2 text-sm text-gray-300">
-                Budget range
+                {t("contact.formBudget")}
                 <input
                   type="text"
                   name="budget"
-                  placeholder="$15k – $25k"
+                  placeholder={t("contact.formPlaceholderBudget")}
                   className="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder:text-gray-500 focus:border-white/30 focus:outline-none"
                 />
               </label>
@@ -203,30 +173,30 @@ function Contact() {
               type="submit"
               className="btn-accent btn-intelligent px-6 py-3 rounded-full uppercase tracking-[0.3em] text-sm font-semibold inline-flex items-center gap-3 justify-center"
             >
-              Send message
+              {t("contact.sendMessage")}
             </button>
           </form>
         </div>
 
         <div className="flex flex-col gap-8">
           <div className="card-surface rounded-3xl p-6 flex flex-col gap-4">
-            <h3 className="text-xl font-semibold text-white">Office hours</h3>
+            <h3 className="text-xl font-semibold text-white">{t("contact.officeHours")}</h3>
             <ul className="flex flex-col gap-2 text-sm text-gray-400">
-              {officeHours.map((slot) => (
-                <li key={slot.day} className="flex justify-between">
-                  <span>{slot.day}</span>
-                  <span className="text-white">{slot.time}</span>
+              {officeHourKeys.map((slot) => (
+                <li key={slot.dayKey} className="flex justify-between">
+                  <span>{t(slot.dayKey)}</span>
+                  <span className="text-white">{t(slot.timeKey)}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div className="card-surface rounded-3xl p-6 flex flex-col gap-4">
-            <h3 className="text-xl font-semibold text-white">FAQ</h3>
+            <h3 className="text-xl font-semibold text-white">{t("contact.faq")}</h3>
             <div className="flex flex-col gap-4 text-sm text-gray-400">
-              {faqs.map((item) => (
-                <div key={item.question} className="flex flex-col gap-2">
-                  <p className="text-white font-semibold">{item.question}</p>
-                  <p className="leading-relaxed">{item.answer}</p>
+              {faqKeys.map((item) => (
+                <div key={item.questionKey} className="flex flex-col gap-2">
+                  <p className="text-white font-semibold">{t(item.questionKey)}</p>
+                  <p className="leading-relaxed">{t(item.answerKey)}</p>
                 </div>
               ))}
             </div>
@@ -240,12 +210,10 @@ function Contact() {
         className="glass-text-container p-8 md:p-12 flex flex-col gap-6 items-start"
       >
         <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
-          Have a brief or RFP ready?
+          {t("contact.briefTitle")}
         </h2>
         <p className="text-base md:text-lg text-gray-300 max-w-2xl leading-relaxed">
-          Send over any documents, prototypes, or Looms. I will review, highlight
-          risks and opportunities, then follow up with a plan you can share with
-          stakeholders.
+          {t("contact.briefBody")}
         </p>
         <div
           ref={ctaRef}
@@ -259,7 +227,7 @@ function Contact() {
             href="mailto:hello@example.com?subject=Share%20a%20brief"
             className="btn-accent btn-intelligent px-6 py-3 rounded-full uppercase tracking-[0.3em] text-sm font-semibold inline-flex items-center gap-3"
           >
-            Share files
+            {t("contact.shareFiles")}
             <svg
               viewBox="0 0 24 24"
               fill="none"

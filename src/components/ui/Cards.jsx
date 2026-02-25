@@ -1,7 +1,11 @@
-import { showcaseItems } from "../constants/const";
+import { useTranslation } from "react-i18next";
+import { skillKeys } from "../constants/const";
 import ScrollSection from "../common/ScrollSection";
 
 function Cards() {
+  const { t } = useTranslation();
+  const skillsLoop = [...skillKeys, ...skillKeys];
+
   return (
     <ScrollSection
       animationType="fade-up"
@@ -12,19 +16,19 @@ function Cards() {
     >
       <div className="auto-scroll-wrapper">
         <div className="auto-scroll-track">
-          {showcaseItems.map((item, index) => (
+          {skillsLoop.map((item, index) => (
             <article
-              key={`${item.title}-${index}`}
+              key={`${item.id}-${index}`}
               className="card-surface shrink-0 w-60 md:w-72 rounded-3xl p-6 flex flex-col gap-4"
             >
               <span className="text-xs uppercase tracking-[0.3em] text-[#f5c2c7]">
-                {item.tag}
+                {t(item.tagKey)}
               </span>
               <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white">
-                {item.title}
+                {t(`skills.${item.id}_title`)}
               </h3>
               <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                {item.description}
+                {t(`skills.${item.id}_desc`)}
               </p>
             </article>
           ))}

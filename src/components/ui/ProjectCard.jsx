@@ -1,7 +1,9 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useScrollAnimation } from "../../hooks/useScrollAnimation";
 
 function ProjectCard({ project, index }) {
+  const { t } = useTranslation();
   const [itemRef, isItemVisible] = useScrollAnimation({
     threshold: 0.1,
     rootMargin: "0px 0px -50px 0px",
@@ -41,7 +43,7 @@ function ProjectCard({ project, index }) {
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <span className="text-xs uppercase tracking-[0.3em] text-[#f5c2c7] group-hover:text-[#f5c2c7]/80 transition-colors duration-[350ms]">
-            {project.category}
+            {t(project.categoryKey)}
           </span>
           <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-[350ms] delay-75">
             {project.githubUrl && (
@@ -94,11 +96,11 @@ function ProjectCard({ project, index }) {
         </div>
 
         <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white group-hover:text-[#f5c2c7] transition-colors duration-[350ms]">
-          {project.title}
+          {t(project.titleKey)}
         </h3>
 
         <p className="text-sm md:text-base text-gray-300 leading-relaxed line-clamp-3 group-hover:text-gray-200 transition-colors duration-[350ms]">
-          {project.description}
+          {t(project.descriptionKey)}
         </p>
 
         {/* Technologies */}

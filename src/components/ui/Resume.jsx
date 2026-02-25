@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import ScrollSection from "../common/ScrollSection";
 import { useScrollAnimation } from "../../hooks/useScrollAnimation";
 
 function Resume() {
+  const { t } = useTranslation();
   const [textRef, isTextVisible] = useScrollAnimation({
     threshold: 0.2,
     rootMargin: "0px 0px -100px 0px",
@@ -63,11 +65,10 @@ function Resume() {
           }`}
         >
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
-            Resume
+            {t("resume.title")}
           </h2>
           <p className="text-sm md:text-base text-gray-400 leading-relaxed">
-            Download my resume to learn more about my professional experience,
-            skills, and achievements.
+            {t("resume.description")}
           </p>
         </div>
 
@@ -86,7 +87,7 @@ function Resume() {
             onMouseLeave={handlePointerLeave}
             className="btn-accent btn-intelligent px-8 py-4 rounded-full cursor-pointer text-sm md:text-base font-semibold uppercase tracking-[0.2em] flex items-center gap-3 group relative"
           >
-            <span className="relative z-10">Download Resume</span>
+            <span className="relative z-10">{t("resume.downloadBtn")}</span>
             <svg
               viewBox="0 0 24 24"
               fill="none"

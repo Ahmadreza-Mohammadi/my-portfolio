@@ -1,20 +1,22 @@
 export const navLinks = [
-  {
-    name: "Home",
-    path: "/",
-  },
-  {
-    name: "Projects",
-    path: "/projects",
-  },
-  {
-    name: "About",
-    path: "/about",
-  },
-  {
-    name: "Contact",
-    path: "/contact",
-  },
+  { nameKey: "nav.home", path: "/" },
+  { nameKey: "nav.projects", path: "/projects" },
+  { nameKey: "nav.about", path: "/about" },
+  { nameKey: "nav.contact", path: "/contact" },
+];
+
+export const skillKeys = [
+  { id: "react", tagKey: "skills.framework" },
+  { id: "next", tagKey: "skills.framework" },
+  { id: "ts", tagKey: "skills.language" },
+  { id: "redux", tagKey: "skills.state" },
+  { id: "rq", tagKey: "skills.data" },
+  { id: "api", tagKey: "skills.integration" },
+  { id: "rwd", tagKey: "skills.layout" },
+  { id: "tailwind", tagKey: "skills.css" },
+  { id: "bootstrap", tagKey: "skills.css" },
+  { id: "mui", tagKey: "skills.uiLibrary" },
+  { id: "leaflet", tagKey: "skills.maps" },
 ];
 
 export const showcaseItems = [
@@ -149,35 +151,32 @@ export const showcaseItems = [
 export const featuredProjects = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description:
-      "A modern e-commerce solution built with React and Next.js, featuring real-time inventory management and seamless checkout experience.",
+    titleKey: "featuredProjects.project1_title",
+    descriptionKey: "featuredProjects.project1_desc",
+    categoryKey: "featuredProjects.project1_category",
     technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
     image: "/images/project-1.jpg",
     githubUrl: "https://github.com/example",
     liveUrl: "https://example.com",
-    category: "Web App",
   },
   {
     id: 2,
-    title: "Task Management Dashboard",
-    description:
-      "An intuitive task management application with drag-and-drop functionality, team collaboration features, and real-time updates.",
+    titleKey: "featuredProjects.project2_title",
+    descriptionKey: "featuredProjects.project2_desc",
+    categoryKey: "featuredProjects.project2_category",
     technologies: ["React", "Node.js", "MongoDB", "Socket.io"],
     image: "/images/project-2.jpg",
     githubUrl: "https://github.com/example",
     liveUrl: "https://example.com",
-    category: "Full Stack",
   },
   {
     id: 3,
-    title: "Portfolio Website",
-    description:
-      "A responsive portfolio website showcasing projects and skills with smooth animations and modern design patterns.",
+    titleKey: "featuredProjects.project3_title",
+    descriptionKey: "featuredProjects.project3_desc",
+    categoryKey: "featuredProjects.project3_category",
     technologies: ["React", "Tailwind CSS", "Framer Motion"],
     image: "/images/project-3.jpg",
     githubUrl: "https://github.com/example",
     liveUrl: "https://example.com",
-    category: "Frontend",
   },
 ];
