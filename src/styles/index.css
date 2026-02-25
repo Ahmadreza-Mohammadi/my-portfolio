@@ -283,29 +283,43 @@ body {
   opacity: 0.85;
 }
 
+/* تم دارک: منوی موبایل – متن و آیکون سفید روی پس‌زمینه تیره */
 [data-theme="dark"] .mobile-menu-surface .text-white\/90,
 [data-theme="dark"] .mobile-menu-surface .text-white\/80,
 [data-theme="dark"] .mobile-menu-surface .text-gray-100 {
-  color: #0a0a0a;
+  color: #fff;
 }
 
 [data-theme="dark"] .mobile-menu-surface button,
 [data-theme="dark"] .mobile-menu-surface a {
-  color: #0a0a0a;
+  color: #fff;
 }
 
 [data-theme="dark"] .mobile-menu-surface button:hover,
 [data-theme="dark"] .mobile-menu-surface a:hover {
-  color: #000;
+  color: #fff;
 }
 
 [data-theme="dark"] .mobile-menu-surface .border-white\/10 {
-  border-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 [data-theme="dark"] .mobile-menu-surface a[href] svg,
 [data-theme="dark"] .mobile-menu-surface button svg {
-  color: inherit;
+  color: #fff;
+}
+
+[data-theme="dark"] .mobile-menu-surface .opacity-70 {
+  opacity: 0.85;
+}
+
+[data-theme="dark"] .mobile-menu-surface .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .mobile-menu-surface a:hover,
+[data-theme="dark"] .mobile-menu-surface button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 /* Footer light theme – blue waves */

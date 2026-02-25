@@ -190,7 +190,10 @@ function Navbar() {
           </span>
           <span className="min-[400px]:hidden">{t("nav.brandShort")}</span>
         </Link>
-        <div className="hidden gap-6 text-lg font-medium tracking-wide md:flex">
+        <div
+          dir={i18n.language === "fa" ? "rtl" : "ltr"}
+          className="hidden gap-6 text-lg font-medium tracking-wide md:flex"
+        >
           {navLinks.map((link) => (
             <Link
               to={link.path}
@@ -200,7 +203,7 @@ function Navbar() {
                 isActive(link.path)
                   ? "text-white drop-shadow-md bg-white/10 after:w-0"
                   : "text-gray-300 hover:after:w-[calc(100%-1.5rem)]"
-              }`}
+              } ${i18n.language === "fa" ? "after:left-auto after:right-3" : ""}`}
             >
               <span className="opacity-70">{linkIcons[link.path] ?? null}</span>
               {t(link.nameKey)}
@@ -208,6 +211,14 @@ function Navbar() {
           ))}
         </div>
         <div className="hidden items-center gap-3 md:flex">
+          <button
+            type="button"
+            onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
+            className="cursor-pointer rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90 transition-all duration-300 hover:bg-white/20 hover:text-white"
+            aria-label={i18n.language === "fa" ? "Switch to English" : "تبدیل به فارسی"}
+          >
+            {i18n.language === "fa" ? "EN" : "FA"}
+          </button>
           <button
             type="button"
             onClick={toggleTheme}
@@ -223,14 +234,6 @@ function Navbar() {
                 <path d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
               </svg>
             )}
-          </button>
-          <button
-            type="button"
-            onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
-            className="cursor-pointer rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90 transition-all duration-300 hover:bg-white/20 hover:text-white"
-            aria-label={i18n.language === "fa" ? "Switch to English" : "تبدیل به فارسی"}
-          >
-            {i18n.language === "fa" ? "EN" : "FA"}
           </button>
           <a
             href="https://github.com/Ahmadreza-Mohammadi"
@@ -342,8 +345,18 @@ function Navbar() {
               }
             }}
           >
-            <div className="mobile-menu-surface flex flex-col gap-2 rounded-3xl border border-white/10 p-4 text-sm font-medium text-gray-100 shadow-2xl shadow-black/40 backdrop-blur-2xl">
-              <div className="flex items-center justify-end gap-2 pb-2 border-b border-white/10">
+            <div
+              dir={i18n.language === "fa" ? "rtl" : "ltr"}
+              className={`mobile-menu-surface flex flex-col gap-2 rounded-3xl border border-white/10 p-4 text-sm font-medium text-gray-100 shadow-2xl shadow-black/40 backdrop-blur-2xl ${i18n.language === "fa" ? "text-right" : ""}`}
+            >
+              <div className={`flex items-center gap-2 pb-2 border-b border-white/10 ${i18n.language === "fa" ? "justify-start" : "justify-end"}`}>
+                <button
+                  type="button"
+                  onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
+                  className="cursor-pointer rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90"
+                >
+                  {i18n.language === "fa" ? "EN" : "FA"}
+                </button>
                 <button
                   type="button"
                   onClick={toggleTheme}
@@ -359,13 +372,6 @@ function Navbar() {
                       <path d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
                     </svg>
                   )}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => i18n.changeLanguage(i18n.language === "fa" ? "en" : "fa")}
-                  className="cursor-pointer rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white/90"
-                >
-                  {i18n.language === "fa" ? "EN" : "FA"}
                 </button>
                 <a
                   href="https://github.com/Ahmadreza-Mohammadi"
